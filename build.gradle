@@ -4,10 +4,10 @@ buildscript {
     ext {
         kotlin_version = '1.9.22'
 
-        appcompat_version = '1.7.0'
-        core_ktx_version = '1.15.0'
+        appcompat_version = '1.6.1'
+        core_ktx_version = '1.12.0'
         core_testing_version = '2.2.0'
-        constraintlayout_version = '2.2.0'
+        constraintlayout_version = '2.1.4'
         material_version = "1.12.0"
         moshi_version = '1.8.0'
         retrofit_version = '2.9.0'
@@ -17,7 +17,7 @@ buildscript {
 
         junit_version = '4.12'
         mockito_version = '3.9.0'
-        mockito_kotlin_version = '2.1.0'
+        mockito_kotlin_version = '3.2.0'
 
         test_runner_version = '1.6.2'
         espresso_version = '3.6.1'
@@ -29,20 +29,20 @@ buildscript {
         rxjava_version = "2.2.17"
         rxandroid_version = "2.1.1"
         core_ktx_test_version = "1.6.1"
+        agp_version = '8.0.0'
+        agp_version1 = '8.3.1'
     }
 
     repositories {
         google()
         mavenCentral()
         jcenter()
-        maven { url 'https://jitpack.io' } // Adicione esta linha
+        maven { url 'https://jitpack.io' }
 
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.4.2'
+        classpath "com.android.tools.build:gradle:$agp_version1"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
     }
 }
 
