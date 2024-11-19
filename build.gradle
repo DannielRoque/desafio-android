@@ -1,37 +1,6 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
 
 buildscript {
-    ext {
-        kotlin_version = '1.9.22'
-
-        appcompat_version = '1.6.1'
-        core_ktx_version = '1.12.0'
-        core_testing_version = '2.2.0'
-        constraintlayout_version = '2.1.4'
-        material_version = "1.12.0"
-        moshi_version = '1.8.0'
-        retrofit_version = '2.9.0'
-        okhttp_version = '4.12.0'
-        picasso_version = '2.71828'
-        circleimageview_version = '3.0.0'
-
-        junit_version = '4.12'
-        mockito_version = '3.9.0'
-        mockito_kotlin_version = '3.2.0'
-
-        test_runner_version = '1.6.2'
-        espresso_version = '3.6.1'
-
-        koin_version = "4.0.0"
-        dagger_version = "2.28.3"
-        lifecycle_version = "2.8.7"
-        coroutines_version = "1.9.0"
-        rxjava_version = "2.2.17"
-        rxandroid_version = "2.1.1"
-        core_ktx_test_version = "1.6.1"
-        agp_version = '8.0.0'
-        agp_version1 = '8.3.1'
-    }
 
     repositories {
         google()
@@ -40,9 +9,15 @@ buildscript {
         maven { url 'https://jitpack.io' }
 
     }
+
+    ext {
+        apply from: "dependencies/dependencies.gradle"
+        agp_version = androidGradlePlugin
+    }
+
     dependencies {
-        classpath "com.android.tools.build:gradle:$agp_version1"
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "com.android.tools.build:gradle:$agp_version"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.22"
     }
 }
 

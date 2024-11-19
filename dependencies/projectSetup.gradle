@@ -1,0 +1,140 @@
+def verifyProp(String prop) {
+    return project.hasProperty(prop) && (project[prop].toBoolean() == true)
+}
+
+if (project.hasProperty('android')) {
+    project.plugins.apply("kotlin-android")
+
+    def system = project.systemVersions
+
+    android {
+        compileSdkVersion = systemVersions.compileSdkVersion
+        buildToolsVersion = systemVersions.buildVersion
+
+        defaultConfig {
+            versionCode 1
+            versionName "1.0"
+
+            minSdkVersion system.minimumVersion
+            targetSdkVersion system.targetVersion
+
+            testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+            consumerProguardFiles "consumer-rules.pro"
+
+        }
+
+        buildTypes {
+            debug {
+                signingConfig signingConfigs.debug
+            }
+
+            release {
+                minifyEnabled true
+                proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            }
+        }
+
+        kotlin {
+            jvmToolchain(17)
+        }
+
+        compileOptions {
+            sourceCompatibility JavaVersion.VERSION_17
+            targetCompatibility JavaVersion.VERSION_17
+        }
+
+        sourceSets {
+            main { res.srcDirs = ['src/main/res', 'src/test/resources', 'src/androidTest/resource'] }
+        }
+    }
+}
+
+dependencies {
+    def deps = project.projectDependencies
+
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation deps.kotlin
+    implementation deps.appCompat
+
+    if (verifyProp('usesCoroutines')) {
+        implementation deps.coroutines_core
+        implementation deps.coroutines_android
+    }
+
+    if (verifyProp('usesConstraintLayout')) {
+        implementation deps.constraintLayout
+    }
+
+    if (verifyProp('usesMaterial')) {
+        implementation deps.material
+    }
+
+    if (verifyProp('usesLiveDataKtx')) {
+        implementation deps.livedata_ktx
+    }
+
+    if (verifyProp('usesRuntimeKtx')) {
+        implementation deps.runtime_ktx
+    }
+
+    if (verifyProp('usesViewModelKtx')) {
+        implementation deps.viewmodel_ktx
+    }
+
+    if (verifyProp('usesRXJava')) {
+        implementation deps.rxJava
+    }
+
+    if (verifyProp('usesRXAndroid')) {
+        implementation deps.rxAndroid
+    }
+
+    if (verifyProp('usesKoin')) {
+        api deps.koin_core
+        api deps.koin_android
+    }
+
+    if (verifyProp('usesRetrofit')) {
+        implementation deps.retrofit2
+    }
+
+    if (verifyProp('usesGson')) {
+        api deps.gson
+        api deps.gson_converter
+    }
+
+    if (verifyProp('usesPicasso')) {
+        implementation deps.picasso
+        api deps.circleimageview
+    }
+
+    if (verifyProp('usesUnitTest')) {
+        testImplementation deps.junit_test
+        testImplementation deps.core_testing
+    }
+
+    if (verifyProp('usesKoinTest')) {
+        testImplementation deps.koin_test
+    }
+
+    if (verifyProp('usesCoroutinesTest')) {
+        testApi deps.coroutines_test
+        androidTestImplementation deps.coroutines_test
+    }
+
+    if (verifyProp('usesmockitokotlin2')) {
+        testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0") {
+            exclude group: 'org.mockito', module: 'mockito-core'
+        }
+        testImplementation deps.mockito_test
+    }
+
+    if (verifyProp('usesEspresso')) {
+        androidTestImplementation deps.espresso
+    }
+
+    if (verifyProp('usesCoreTest')) {
+        androidTestImplementation deps.core_ktx_test
+    }
+}
